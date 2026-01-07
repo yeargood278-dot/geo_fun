@@ -4,6 +4,9 @@ $id = $_GET['id'] ?? 'c1s1';
 $content = $courses[$id] ?? $courses['c1s1'];
 $qa = $content['quiz']['part_a'];
 $qb = $content['quiz']['part_b'];
+
+// 智能判断所属书籍：如果ID以 'b2' 开头，则是必修二，否则默认为必修一
+$bid = (strpos($id, 'b2') === 0) ? 'b2' : 'b1';
 ?>
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -13,8 +16,8 @@ $qb = $content['quiz']['part_b'];
     <title>警校考核</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        .header { background: #2c3e50; color: white; padding: 40px 20px; border-radius: 0 0 20px 20px; text-align: center; }
-        .q-item { background: white; border-radius: 10px; padding: 20px; margin-bottom: 20px; border-left: 5px solid #3498db; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .header { background: <?php echo ($bid=='b2') ? '#d35400' : '#2c3e50'; ?>; color: white; padding: 40px 20px; border-radius: 0 0 20px 20px; text-align: center; }
+        .q-item { background: white; border-radius: 10px; padding: 20px; margin-bottom: 20px; border-left: 5px solid <?php echo ($bid=='b2') ? '#e67e22' : '#3498db'; ?>; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         .ans-show { display: none; background: #d1e7dd; padding: 10px; margin-top: 10px; border-radius: 5px; color: #0f5132; word-break: break-word; }
         @media (max-width: 576px) {
             .header { padding: 30px 15px; }
@@ -52,7 +55,7 @@ $qb = $content['quiz']['part_b'];
             <h4 class="text-danger mb-3">Part B: 逻辑推理</h4>
             <?php foreach($qb as $l): ?>
             <div class="card p-4 mb-3 border-danger shadow-sm">
-                <h5>🦊 <?php echo $l['title']; ?></h5>
+                <h5><?php echo $l['title']; ?></h5>
                 <p class="fw-bold mt-2"><?php echo $l['q']; ?></p>
                 <button class="btn btn-sm btn-outline-danger" onclick="this.nextElementSibling.style.display='block'">查看分析</button>
                 <div class="ans-show text-dark mt-3"><?php echo $l['ans']; ?></div>
@@ -60,7 +63,7 @@ $qb = $content['quiz']['part_b'];
             <?php endforeach; ?>
             <div class="text-center mt-5 pb-5">
                 <a href="index.php" class="btn btn-primary rounded-pill px-4 mx-2">🏠 首页</a>
-                <a href="chapter_map.php" class="btn btn-secondary rounded-pill px-4 mx-2">🗺️ 地图</a>
+                <a href="chapter_map.php?bid=<?php echo $bid; ?>" class="btn btn-secondary rounded-pill px-4 mx-2">🗺️ 地图</a>
             </div>
         </div>
     </div>
