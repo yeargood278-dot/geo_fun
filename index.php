@@ -3,14 +3,19 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>地理乐 Geo_Fun </title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body { background-color: #f4f6f9; font-family: 'Segoe UI', sans-serif; }
-        .hero { background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%); color: white; padding: 100px 0; border-radius: 0 0 50% 50% / 30px; margin-bottom: 50px; }
+        .hero { background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%); color: white; padding: 60px 20px; border-radius: 0 0 50% 50% / 30px; margin-bottom: 40px; }
         .book-card { border: none; border-radius: 15px; background: white; transition: 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
         .book-card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
-        .bar { height: 8px; width: 100%; }
+        .bar { height: 8px; width: 100%; border-radius: 15px 15px 0 0; }
+        @media (max-width: 576px) {
+            .hero h1 { font-size: 2.5rem; }
+            .hero { padding: 50px 10px; border-radius: 0 0 20% 20% / 20px; }
+        }
     </style>
 </head>
 <body>
@@ -21,7 +26,7 @@
     <div class="container mb-5">
         <div class="row g-4 justify-content-center">
             <?php foreach ($books as $id => $book): ?>
-            <div class="col-md-4 col-sm-6">
+            <div class="col-md-4 col-sm-6 col-12">
                 <div class="card book-card h-100">
                     <div class="bar" style="background: <?php echo $book['color']; ?>"></div>
                     <div class="card-body text-center p-4">
