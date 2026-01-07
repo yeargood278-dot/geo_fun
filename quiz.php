@@ -9,12 +9,19 @@ $qb = $content['quiz']['part_b'];
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>警校考核</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        .header { background: #2c3e50; color: white; padding: 40px; border-radius: 0 0 20px 20px; text-align: center; }
+        .header { background: #2c3e50; color: white; padding: 40px 20px; border-radius: 0 0 20px 20px; text-align: center; }
         .q-item { background: white; border-radius: 10px; padding: 20px; margin-bottom: 20px; border-left: 5px solid #3498db; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .ans-show { display: none; background: #d1e7dd; padding: 10px; margin-top: 10px; border-radius: 5px; color: #0f5132; }
+        .ans-show { display: none; background: #d1e7dd; padding: 10px; margin-top: 10px; border-radius: 5px; color: #0f5132; word-break: break-word; }
+        @media (max-width: 576px) {
+            .header { padding: 30px 15px; }
+            .header h2 { font-size: 1.5rem; }
+            .container { padding-left: 15px; padding-right: 15px; }
+            .btn-lg { width: 100%; }
+        }
     </style>
 </head>
 <body class="bg-light">
@@ -39,7 +46,7 @@ $qb = $content['quiz']['part_b'];
                 <div class="ans-show"><strong>✅ 正确答案：<?php echo $q['ans']; ?></strong><br><?php echo $q['expl']; ?></div>
             </div>
             <?php endforeach; ?>
-            <div class="d-grid mb-5"><button type="button" class="btn btn-primary btn-lg" onclick="check()">提交答卷</button></div>
+            <div class="d-grid mb-5"><button type="button" class="btn btn-primary btn-lg shadow" onclick="check()">提交答卷</button></div>
         </form>
         <div id="partB" style="display: none;">
             <h4 class="text-danger mb-3">Part B: 逻辑推理</h4>
@@ -51,7 +58,7 @@ $qb = $content['quiz']['part_b'];
                 <div class="ans-show text-dark mt-3"><?php echo $l['ans']; ?></div>
             </div>
             <?php endforeach; ?>
-            <div class="text-center mt-5">
+            <div class="text-center mt-5 pb-5">
                 <a href="index.php" class="btn btn-primary rounded-pill px-4 mx-2">🏠 首页</a>
                 <a href="chapter_map.php" class="btn btn-secondary rounded-pill px-4 mx-2">🗺️ 地图</a>
             </div>
@@ -63,7 +70,6 @@ $qb = $content['quiz']['part_b'];
             const total = document.querySelectorAll('.q-item').length;
             document.querySelectorAll('.q-item').forEach(el => {
                 const correct = el.getAttribute('data-ans');
-                // 获取选中的值，兼容单选和多选
                 const checked = Array.from(el.querySelectorAll('input:checked')).map(i=>i.value).sort().join('');
                 
                 const ansDiv = el.querySelector('.ans-show');
@@ -75,7 +81,6 @@ $qb = $content['quiz']['part_b'];
                 } else { 
                     el.style.borderLeftColor = 'red'; 
                 }
-                // 禁用所有选项防止重复修改
                 el.querySelectorAll('input').forEach(i=>i.disabled=true);
             });
             alert('考核结束！得分：' + score + '/' + total);
